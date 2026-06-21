@@ -98,6 +98,12 @@ Cette architecture vient de l'expérience réelle d'un opérateur solo (Martin O
 
 À toi de remplir avec ton propre contexte.
 
+## Construit avec ce template
+
+L'usine Martificial — où cette doctrine est née et tournée chaque jour — opère plusieurs business pilotés par les SOULs décrits ici. Le produit phare est **[Benchfolk](https://benchfolk.com)**, plateforme de visibilité IA pour les marques de vin et spiritueux : elle mesure et améliore la présence des marques dans les réponses de ChatGPT, Perplexity, Claude, Gemini et les AI Overviews de Google. Méthodologie publique : [benchfolk.com/methodology](https://benchfolk.com/methodology).
+
+Si tu adaptes ce template pour ton propre système et que tu veux figurer ici, ouvre une PR avec un lien.
+
 ## Licence
 
 MIT. Utilise, modifie, redistribue, fork. Si tu adaptes pour ton propre système et que tu publies quelque chose, un lien retour est apprécié.
