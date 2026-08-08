@@ -53,7 +53,14 @@ Tout output qui viole §A est :
 
 ## §B — PROTOCOLE BUS — `agents.jsonl`
 
-**Lieu unique** : `~/.openclaw/workspace-shared/agents.jsonl` sur VPS (mirror Tailnet Mac mini).
+**Journal d'audit** : `~/.openclaw/workspace-shared/agents.jsonl` sur VPS (mirror Tailnet Mac mini).
+
+Le fichier n'est jamais une interface de commande directement inscriptible par les
+agents. Toute publication et lecture passe par le broker `busctl`. Le broker
+authentifie le processus producteur hors du payload, applique une ACL par
+`action`, attribue `event_id` et `issued_at`, signe le digest canonique et
+rejette les événements rejoués. Les champs `agent`, `from_agent`, `by` ou
+`status` fournis par un payload ne constituent jamais une preuve d'identité.
 
 **Format** : 1 ligne = 1 événement JSON. Append-only. Jamais d'édit, jamais de delete (sauf rotation /6 mois en archive).
 
@@ -62,6 +69,10 @@ Tout output qui viole §A est :
 ```json
 {
   "ts": "2026-06-08T14:23:11Z",
+  "event_id": "evt-uuid-non-rejouable",
+  "producer_id": "identite-attribuee-par-le-broker",
+  "payload_digest": "sha256:…",
+  "signature": "signature-du-broker",
   "agent": "scout",
   "from_agent": null,
   "to_agent": "company-steward",
@@ -90,7 +101,9 @@ Tout output qui viole §A est :
 5. {COMPANY_NAME}Steward.write({action: "decision_proposed", to_agent: "compass", priority: P1_today, requires_martin: true})
 6. Compass.read() → ajoute au Daily Digest 7h
 7. Telegram → {YOUR_FIRST_NAME} [GO] [KILL]
-8. {YOUR_FIRST_NAME} click → Compass.write({action: "decision_validated", status: "done"})
+8. {YOUR_FIRST_NAME} click → le webhook authentifie l'identifiant Telegram autorisé,
+   lie l'approbation au digest exact de la décision et émet un jeton d'approbation
+   à usage unique. Compass ne peut pas fabriquer ce jeton.
 9. Si GO → Compass.write({action: "task_assigned", to_agent: "editor", content: {brief_carnet}})
 10. Editor produit, écrit task_completed.
 ```
@@ -114,11 +127,13 @@ Tout output qui viole §A est :
 ### Lecture du bus
 
 Chaque agent au démarrage :
-1. Lit les 100 dernières lignes de `agents.jsonl` (contexte récent)
+1. Demande au broker les 100 derniers événements vérifiés (jamais lecture directe
+   d'une ligne non signée)
 2. Filtre celles qui le concernent (`to_agent == self OR pillar == self.pillar`)
 3. Filtre `status: pending`
 4. Trie par priorité (P0 > P1 > P2 > P3)
-5. Traite. Écrit son output. Marque status: done.
+5. Vérifie ACL, signature, expiration, anti-rejeu et chaîne d'approbation, puis
+   traite. Publie son output via le broker. Tout échec est rejeté et journalisé.
 
 ---
 

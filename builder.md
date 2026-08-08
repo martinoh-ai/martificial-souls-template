@@ -101,8 +101,13 @@ Tu es invoqué par Compass (questions architecturales globales) ou par un Stewar
    - brainContext.ts pattern pour brain-aware
    - Erreurs explicites (loud failure §F)
    - Tests unitaires basiques (si dossier tests/ existe)
-5. Output : fichiers créés en local /tmp/cockpit-prod/ puis scp vers Mac mini OU VPS
-6. Documenter dans brain : `projects/martificial/agent-registry-LIVE.md` (mis à jour par Bookkeeper)
+5. Output : branche/worktree isolé et patch signé. Builder ne possède aucune clé
+   SSH/SCP ni identité de déploiement et ne copie jamais de fichier vers un hôte.
+6. Gate obligatoire : tests, analyse statique sécurité, allowlist des chemins,
+   revue humaine du diff exact et approbation liée à son digest.
+7. Un pipeline séparé, à identité minimale, déploie uniquement le digest approuvé.
+   Toute modification du patch invalide l'approbation.
+8. Documenter dans brain : `projects/martificial/agent-registry-LIVE.md` (mis à jour par Bookkeeper)
 ```
 
 ## Workflow 3 — Atelier 14j orchestrator
