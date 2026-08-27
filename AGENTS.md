@@ -4,7 +4,7 @@
 
 ## Contexte global Martin (lecture obligatoire au démarrage)
 
-1. `~/Code/martificial-brain/CLAUDE.md` (règles workflow #0, #0bis, #0ter)
+1. `~/Code/martificial-brain/AGENTS.md` (règles workflow #0, #0bis, #0ter — `CLAUDE.md` n'est qu'un import vers lui)
 2. `~/Code/martificial-brain/MARTIN.md` (profil Martin Ohannessian)
 
 ## Tu travailles sur
@@ -12,7 +12,7 @@
 **Martificial** — Marque personnelle tech / AI builder de Martin (= AI Lab + Personal Brand).
 - Personal brand : Martin Ohannessian, ex-Le Petit Ballon (40M€ CA), solo entrepreneur AI
 - AI Lab : SaaS portfolio (Benchfolk LIVE, AirLift roadmap Q4 2026, futurs)
-- 11 agents 24/7 sur VPS
+- Agents VPS/Hermes hibernés depuis le 2026-07-16 — système actif décrit dans `operations/brain-kernel-v3.md`
 - Brain GitHub public
 
 ## Documents brain ciblés pour ce projet
