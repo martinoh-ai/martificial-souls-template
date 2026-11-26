@@ -2,10 +2,13 @@
 
 # Projet : Martificial — AI Lab + Personal Brand
 
-## Contexte global Martin (lecture obligatoire au démarrage)
+## Contexte global Martin (à la demande)
 
-1. `~/Code/martificial-brain/CLAUDE.md` (règles workflow #0, #0bis, #0ter)
-2. `~/Code/martificial-brain/MARTIN.md` (profil Martin Ohannessian)
+Ne lis ni `MARTIN.md` ni le Brain au démarrage. Quand la tâche a besoin du
+profil de Martin, d'une décision passée ou d'un document du Brain, lance
+`brain-context "demande exacte" --project "<projet>"` et ne charge que les
+sources retournées. Les chemins listés plus bas sont des pointeurs, pas une
+liste de lecture.
 
 ## Tu travailles sur
 
